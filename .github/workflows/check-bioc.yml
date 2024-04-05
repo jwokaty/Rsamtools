@@ -79,8 +79,8 @@ jobs:
       ## Most of these steps are the same as the ones in
       ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
       ## If they update their steps, we will also need to update ours.
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+#      - name: Checkout Repository
+#        uses: actions/checkout@v3
 
       ## R is already included in the Bioconductor docker images
       - name: Setup R from r-lib
@@ -185,6 +185,11 @@ jobs:
           ## Pass #2 at installing dependencies
           message(paste('****', Sys.time(), 'pass number 2 at installing dependencies: any remaining dependencies ****'))
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE, upgrade = TRUE, force = TRUE)
+        shell: Rscript {0}
+
+      - name: Install Rsamtools
+        run: |
+          BiocManager::install("Rsamtools")
         shell: Rscript {0}
 
       - name: Install BiocGenerics
